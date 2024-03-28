@@ -6,6 +6,11 @@ namespace FluentAssertions.Common;
 public class Configuration
 {
     /// <summary>
+    /// Defines the key for the configuration telling FluentAssertions if it should detect test frameworks.
+    /// </summary>
+    private const string DetectFrameworkConfigurationKey = "FluentAssertions.DetectTestFramework";
+
+    /// <summary>
     /// Defines the key for the configuration of the test framework to be assumed in FluentAssertions.
     /// </summary>
     private const string TestFrameworkConfigurationKey = "FluentAssertions.TestFramework";
@@ -17,6 +22,7 @@ public class Configuration
     private string valueFormatterAssembly;
     private ValueFormatterDetectionMode? valueFormatterDetectionMode;
     private string testFrameworkName;
+    private bool detectTestFramework = true;
 
     #endregion
 
@@ -126,5 +132,26 @@ public class Configuration
             return testFrameworkName;
         }
         set => testFrameworkName = value;
+    }
+
+    /// <summary>
+    /// Enables or disables test framework detection.
+    /// </summary>
+    /// <remarks>
+    /// By default test framework detection is enabled. If disabled, the fallback will always be used.
+    /// </remarks>
+    public bool DetectTestFramework
+    {
+        get
+        {
+            string configValue = store.GetSetting(DetectFrameworkConfigurationKey);
+            if (!string.IsNullOrEmpty(configValue))
+            {
+                detectTestFramework = bool.Parse(configValue);
+            }
+
+            return detectTestFramework;
+        }
+        set => detectTestFramework = value;
     }
 }

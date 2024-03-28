@@ -35,7 +35,15 @@ internal class TestFrameworkProvider
     [DoesNotReturn]
     public void Throw(string message)
     {
-        testFramework ??= DetectFramework();
+        if (configuration.DetectTestFramework)
+        {
+            testFramework ??= DetectFramework();
+        }
+        else
+        {
+            testFramework ??= new FallbackTestFramework();
+        }
+
         testFramework.Throw(message);
     }
 
