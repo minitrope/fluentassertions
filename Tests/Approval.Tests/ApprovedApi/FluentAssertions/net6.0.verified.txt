@@ -605,6 +605,7 @@ namespace FluentAssertions.Common
     public class Configuration
     {
         public Configuration(FluentAssertions.Common.IConfigurationStore store) { }
+        public bool DetectTestFramework { get; set; }
         public string TestFrameworkName { get; set; }
         public string ValueFormatterAssembly { get; set; }
         public FluentAssertions.Common.ValueFormatterDetectionMode ValueFormatterDetectionMode { get; set; }
